@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:task_managing_app/components/build_text_field.dart';
 import 'package:task_managing_app/components/custom_app_bar.dart';
+import 'package:task_managing_app/tasks/presentation/bloc/tasks_bloc.dart';
+import 'package:task_managing_app/tasks/presentation/widget/task_item_view.dart';
 import 'package:task_managing_app/utils/color_palette.dart';
 import 'package:task_managing_app/utils/font_sizes.dart';
+import 'package:task_managing_app/utils/util.dart';
 
 import '../../../components/widgets.dart';
 import '../../../routes/pages.dart';
@@ -37,7 +41,7 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Scaffold(
           backgroundColor: kWhiteColor,
           appBar: CustomAppBar(
-            title: 'Hi Jerome',
+            title: 'Hi RSL',
             showBackArrow: false,
             actionWidgets: [
               PopupMenuButton<int>(
