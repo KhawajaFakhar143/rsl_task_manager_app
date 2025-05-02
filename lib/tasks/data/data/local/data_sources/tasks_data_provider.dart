@@ -49,28 +49,14 @@ class TaskDataProvider {
         });
         break;
       case 1:
-        //sort by completed tasks
-        tasks.sort((a, b) {
-          if (!a.completed && b.completed) {
-            return 1;
-          } else if (a.completed && !b.completed) {
-            return -1;
-          }
-          return 0;
-        });
-        break;
+      return tasks;
       case 2:
-      //sort by pending tasks
-        tasks.sort((a, b) {
-          if (a.completed == b.completed) {
-            return 0;
-          } else if (a.completed) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        break;
+        //completed tasks  
+        return tasks.where((element) => element.completed==true,).toList();
+      case 3:
+      // pending tasks
+     
+        return tasks.where((element) => element.completed==false,).toList();
     }
     return tasks;
   }

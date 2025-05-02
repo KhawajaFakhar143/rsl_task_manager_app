@@ -33,3 +33,7 @@ final class UpdateTaskFailure extends TasksState {
 }
 
 final class UpdateTaskSuccess extends TasksState {}
+
+final class NoTaskCompletedYet extends TasksState{}
+
+final class NoPendingTasksRightNow extends TasksState{}

@@ -92,11 +92,21 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   _sortTasks(SortTaskEvent event, Emitter<TasksState> emit) async {
     final tasks = await taskRepository.sortTasks(event.sortOption);
+    if(event.sortOption == 2 && tasks.isEmpty){
+      add(SortTaskEvent(sortOption: 1));
+      return emit(NoTaskCompletedYet());
+    }
+
+     if(event.sortOption == 3 && tasks.isEmpty){
+      add(SortTaskEvent(sortOption: 1));
+      return emit(NoPendingTasksRightNow());
+    }
     return emit(FetchTasksSuccess(tasks: tasks));
   }
 
   _searchTasks(SearchTaskEvent event, Emitter<TasksState> emit) async {
     final tasks = await taskRepository.searchTasks(event.keywords);
+    
     return emit(FetchTasksSuccess(tasks: tasks, isSearching: true));
   }
 }

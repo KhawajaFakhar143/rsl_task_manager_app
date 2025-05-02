@@ -72,6 +72,13 @@ class _TasksScreenState extends State<TasksScreen> {
                             .add(SortTaskEvent(sortOption: 2));
                         break;
                       }
+                      case 3:
+                      {
+                        context
+                            .read<TasksBloc>()
+                            .add(SortTaskEvent(sortOption: 3));
+                        break;
+                      }
                   }
                 },
                 itemBuilder: (BuildContext context) {
@@ -102,6 +109,27 @@ class _TasksScreenState extends State<TasksScreen> {
                       child: Row(
                         children: [
                           SvgPicture.asset(
+                            'assets/svgs/all_tasks.svg',
+                            width: 15,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          buildText(
+                              'All tasks',
+                              kBlackColor,
+                              textSmall,
+                              FontWeight.normal,
+                              TextAlign.start,
+                              TextOverflow.clip)
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem<int>(
+                      value: 2,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
                             'assets/svgs/task_checked.svg',
                             width: 15,
                           ),
@@ -119,7 +147,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       ),
                     ),
                     PopupMenuItem<int>(
-                      value: 2,
+                      value: 3,
                       child: Row(
                         children: [
                           SvgPicture.asset(
@@ -159,7 +187,15 @@ class _TasksScreenState extends State<TasksScreen> {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(getSnackBar(state.error, kRed));
                     }
-
+                    if(state is NoTaskCompletedYet){
+                      
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(getSnackBar("Check the box to complete the task first, No Task completed", kRed));
+                    }
+                    if(state is NoPendingTasksRightNow){
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(getSnackBar("Add New Task, You have no pending task right now", kGrey0));
+                    }
                     if (state is AddTaskFailure || state is UpdateTaskFailure) {
                       context.read<TasksBloc>().add(FetchTaskEvent());
                     }
