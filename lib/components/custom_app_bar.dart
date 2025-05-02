@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rsl_task_manager_app/components/widgets.dart';
-import 'package:rsl_task_manager_app/utils/color_palette.dart';
-import 'package:rsl_task_manager_app/utils/font_sizes.dart';
+import 'package:task_managing_app/components/widgets.dart';
+import 'package:task_managing_app/utils/color_palette.dart';
+import 'package:task_managing_app/utils/font_sizes.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
