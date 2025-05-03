@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:task_managing_app/components/priorty_drop_down.dart';
 import 'package:task_managing_app/components/widgets.dart';
 import 'package:task_managing_app/tasks/data/data/local/model/task_model.dart';
 import 'package:task_managing_app/tasks/presentation/bloc/tasks_bloc.dart';
@@ -28,9 +29,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  List<String> priortyOptions = ['High', 'Medium', 'Low'];
+  String _selectedPriority = "";
 
   @override
   void initState() {
+    _selectedPriority = priortyOptions[0];
     _selectedDay = _focusedDay;
     super.initState();
   }
@@ -63,8 +67,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     child: BlocConsumer<TasksBloc, TasksState>(
                         listener: (context, state) {
                       if (state is AddTaskFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            getSnackBar(state.error, kRed));
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(getSnackBar(state.error, kRed));
                       }
                       if (state is AddTasksSuccess) {
                         Navigator.pop(context);
@@ -116,6 +120,31 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                 FontWeight.w400,
                                 TextAlign.start,
                                 TextOverflow.clip),
+                          ),
+                            const SizedBox(
+                            height: 5,
+                          ),
+                          buildText(
+                              'Priorty',
+                              kBlackColor,
+                              textMedium,
+                              FontWeight.bold,
+                              TextAlign.start,
+                              TextOverflow.clip),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          PriorityDropdownField(
+                            hint: 'Select Priority',
+                            items: priortyOptions,
+                            selectedValue: _selectedPriority,
+                            onChanged: (value) {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedPriority = value;
+                                });
+                              }
+                            },
                           ),
                           const SizedBox(height: 20),
                           buildText(
@@ -216,6 +245,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                           title: title.text,
                                           description: description.text,
                                           startDateTime: _rangeStart,
+                                          priorty: _selectedPriority,
                                           stopDateTime: _rangeEnd);
                                       context.read<TasksBloc>().add(
                                           AddNewTaskEvent(

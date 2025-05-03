@@ -5,11 +5,13 @@ class TaskModel {
   DateTime? startDateTime;
   DateTime? stopDateTime;
   bool completed;
+  String priorty;
 
   TaskModel({
     required this.id,
     required this.title,
     required this.description,
+    required this.priorty,
     required this.startDateTime,
     required this.stopDateTime,
     this.completed = false,
@@ -19,6 +21,7 @@ class TaskModel {
     return {
       'id': id,
       'title': title,
+      'priorty': priorty,
       'description': description,
       'completed': completed,
       'startDateTime': startDateTime?.toIso8601String(),
@@ -31,6 +34,7 @@ class TaskModel {
     return TaskModel(
       id: json['id'],
       title: json['title'],
+      priorty: json['priorty'],
       description: json['description'],
       completed: json['completed'],
       startDateTime: DateTime.parse(json['startDateTime']),
@@ -40,7 +44,7 @@ class TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel{id: $id, title: $title, description: $description, '
+    return 'TaskModel{id: $id, title: $title, priorty: $priorty, description: $description, '
         'startDateTime: $startDateTime, stopDateTime: $stopDateTime, '
         'completed: $completed}';
   }

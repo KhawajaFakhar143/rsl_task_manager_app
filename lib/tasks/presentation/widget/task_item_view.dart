@@ -33,6 +33,7 @@ class _TaskItemViewState extends State<TaskItemView> {
                   var taskModel = TaskModel(
                       id: widget.taskModel.id,
                       title: widget.taskModel.title,
+                      priorty: widget.taskModel.priorty,
                       description: widget.taskModel.description,
                       completed: !widget.taskModel.completed,
                       startDateTime: widget.taskModel.startDateTime,
@@ -136,6 +137,24 @@ class _TaskItemViewState extends State<TaskItemView> {
                       TextAlign.start,
                       TextOverflow.clip),
                   const SizedBox(height: 15,),
+                  Container(
+                    width: 120,
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    decoration: BoxDecoration(
+                        color: kPrimaryColor.withOpacity(0.1),
+                        borderRadius: const BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset('assets/svgs/priority_icon.svg', width: 12,color: kBlackColor,),
+                        const SizedBox(width: 10,),
+                        buildText(widget.taskModel.priorty, kBlackColor, textTiny,
+                            FontWeight.w400, TextAlign.start, TextOverflow.clip)
+                      ],
+                    )
+                  ),
+                  SizedBox(height: 5,),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     decoration: BoxDecoration(

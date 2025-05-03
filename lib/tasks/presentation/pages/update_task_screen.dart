@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:task_managing_app/components/priorty_drop_down.dart';
 import 'package:task_managing_app/components/widgets.dart';
 import 'package:task_managing_app/tasks/data/data/local/model/task_model.dart';
 import 'package:task_managing_app/utils/font_sizes.dart';
@@ -24,6 +25,8 @@ class UpdateTaskScreen extends StatefulWidget {
 class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
+   List<String> priortyOptions = ['High', 'Medium', 'Low'];
+  String _selectedPriority = "";
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
@@ -49,6 +52,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
 
   @override
   void initState() {
+    _selectedPriority = widget.taskModel.priorty;
     title.text = widget.taskModel.title;
     description.text = widget.taskModel.description;
     _selectedDay = _focusedDay;
@@ -131,6 +135,31 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                                 TextAlign.start,
                                 TextOverflow.clip),
                           ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          buildText(
+                              'Priorty',
+                              kBlackColor,
+                              textMedium,
+                              FontWeight.bold,
+                              TextAlign.start,
+                              TextOverflow.clip),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          PriorityDropdownField(
+                            hint: 'Select Priority',
+                            items: priortyOptions,
+                            selectedValue: _selectedPriority,
+                            onChanged: (value) {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedPriority = value;
+                                });
+                              }
+                            },
+                          ),
                           const SizedBox(height: 20),
                           buildText(
                               'Title',
@@ -193,6 +222,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                                       description: description.text,
                                       completed: widget.taskModel.completed,
                                       startDateTime: _rangeStart,
+                                      priorty: _selectedPriority,
                                       stopDateTime: _rangeEnd);
                                   context.read<TasksBloc>().add(
                                       UpdateTaskEvent(taskModel: taskModel));
