@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:task_managing_app/utils/color_palette.dart';
-import 'package:task_managing_app/utils/font_sizes.dart';
-import 'components/widgets.dart';
 import 'routes/pages.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -38,12 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/images/app_logo.png', width: 100,),
-            const SizedBox(height: 20,),
-            buildText('RSL Task Managing', kWhiteColor, textBold,
-                FontWeight.w600, TextAlign.center, TextOverflow.clip),
-            const SizedBox(
-              height: 10,
-            ),
+          
           ],
         )));
   }

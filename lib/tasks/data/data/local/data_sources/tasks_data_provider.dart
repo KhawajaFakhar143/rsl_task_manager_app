@@ -5,7 +5,6 @@ import 'package:task_managing_app/tasks/data/data/local/model/task_model.dart';
 import 'package:task_managing_app/utils/constants.dart';
 import 'package:task_managing_app/utils/exception_handler.dart';
 
-
 class TaskDataProvider {
   List<TaskModel> tasks = [];
   SharedPreferences? prefs;
@@ -30,7 +29,7 @@ class TaskDataProvider {
         });
       }
       return tasks;
-    }catch(e){
+    } catch (e) {
       throw Exception(handleException(e));
     }
   }
@@ -49,14 +48,29 @@ class TaskDataProvider {
         });
         break;
       case 1:
-      return tasks;
+        return tasks;
       case 2:
-        //completed tasks  
-        return tasks.where((element) => element.completed==true,).toList();
+        //completed tasks
+        return tasks
+            .where(
+              (element) => element.completed == true,
+            )
+            .toList();
       case 3:
-      // pending tasks
-     
-        return tasks.where((element) => element.completed==false,).toList();
+        // pending tasks
+
+        return tasks
+            .where(
+              (element) => element.completed == false,
+            )
+            .toList();
+      case 4:
+        // priority tasks
+        const priorityOrder = {'High': 0, 'Medium': 1, 'Low': 2};
+        tasks.sort((a, b) =>
+            priorityOrder[a.priorty]!.compareTo(priorityOrder[b.priorty]!));
+
+        break;
     }
     return tasks;
   }
@@ -85,8 +99,8 @@ class TaskDataProvider {
           return -1;
         }
       });
-      final List<String> taskJsonList = tasks.map((task) =>
-          json.encode(task.toJson())).toList();
+      final List<String> taskJsonList =
+          tasks.map((task) => json.encode(task.toJson())).toList();
       prefs!.setStringList(Constants.taskKey, taskJsonList);
       return tasks;
     } catch (exception) {
@@ -97,8 +111,8 @@ class TaskDataProvider {
   Future<List<TaskModel>> deleteTask(TaskModel taskModel) async {
     try {
       tasks.remove(taskModel);
-      final List<String> taskJsonList = tasks.map((task) =>
-          json.encode(task.toJson())).toList();
+      final List<String> taskJsonList =
+          tasks.map((task) => json.encode(task.toJson())).toList();
       prefs!.setStringList(Constants.taskKey, taskJsonList);
       return tasks;
     } catch (exception) {
@@ -111,7 +125,8 @@ class TaskDataProvider {
     List<TaskModel> matchedTasked = tasks;
     return matchedTasked.where((task) {
       final titleMatches = task.title.toLowerCase().contains(searchText);
-      final descriptionMatches = task.description.toLowerCase().contains(searchText);
+      final descriptionMatches =
+          task.description.toLowerCase().contains(searchText);
       return titleMatches || descriptionMatches;
     }).toList();
   }

@@ -41,7 +41,7 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Scaffold(
           backgroundColor: kWhiteColor,
           appBar: CustomAppBar(
-            title: 'Hi RSL',
+            title: '',
             showBackArrow: false,
             actionWidgets: [
               PopupMenuButton<int>(
@@ -77,6 +77,13 @@ class _TasksScreenState extends State<TasksScreen> {
                         context
                             .read<TasksBloc>()
                             .add(SortTaskEvent(sortOption: 3));
+                        break;
+                      }
+                       case 4:
+                      {
+                        context
+                            .read<TasksBloc>()
+                            .add(SortTaskEvent(sortOption: 4));
                         break;
                       }
                   }
@@ -159,6 +166,27 @@ class _TasksScreenState extends State<TasksScreen> {
                           ),
                           buildText(
                               'Pending tasks',
+                              kBlackColor,
+                              textSmall,
+                              FontWeight.normal,
+                              TextAlign.start,
+                              TextOverflow.clip)
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem<int>(
+                      value: 4,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/svgs/priority_icon.svg',
+                            width: 15,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          buildText(
+                              'Sort By Priority',
                               kBlackColor,
                               textSmall,
                               FontWeight.normal,
