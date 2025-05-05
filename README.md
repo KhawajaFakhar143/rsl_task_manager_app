@@ -35,6 +35,7 @@ Core Functionality of this project:
 - **Mark task as completed/incomplete**
 - **Delete a task**
 - **Filter tasks by status (All, Completed, Pending)**
+- **Search in Tasks List**
 - **Sort By Date**
 - **Sort By Priority**
 - **shared_preferences**
